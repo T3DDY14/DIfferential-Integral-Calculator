@@ -83,38 +83,58 @@ elif calc == "integration":
             #creating inital u variables
             var = uarr[uvarinit]
             base = var.split("x")
+            baselen = len(base)
             power = var.split("^")
             base = base[0]
-            powerlen = len(power)
-            #check if a power is present
-            if powerlen < 2:
-                power = 1
-            else:
-                power = power[1]
-            #string to integer conversion
-            base = int(base)
-            power = int(power)
-            #integration
-            integration = base/power
-            power = power + 1
-            #test output 
-            print(integration,"x^",power)
-            #adding result to array
-            powersym = "x^"
-            dudx = []
-            dudx.append(integration)
-            dudx.append(powersym)
-            dudx.append(power)
-            #adding array to master array
-            du.append(dudx)
-            #test array output
-            print(du)
-            #restarting loop
-            uvarinit = uvarinit + 1
-            if uvarinit == uvar:
-                break
+            #checking if there is a symbol
+            if baselen == 2:
+                powerlen = len(power)
+                #check if a power is present
+                if powerlen < 2:
+                    power = 1
+                else:
+                    power = power[1]
+                #string to integer conversion
+                base = int(base)
+                power = int(power)
+                #integration
+                integration = base*power
+                power = power - 1
+                dudx = []
+                if power == 0:
+                    print(integration)
+                    dudx.append(integration)
+                    du.append(dudx)
+                    uvarinit = uvarinit +1
+                    if uvarinit == uvar:
+                        break
+                else:
+                    #test output 
+                    ##print(integration,"x^",power)
+                    #adding result to array
+                    powersym = "x^"
+                    dudx.append(integration)
+                    dudx.append(powersym)
+                    dudx.append(power)
+                    #adding array to master array
+                    du.append(dudx)
+                    #restarting loop
+                    uvarinit = uvarinit + 1
+                    if uvarinit == uvar:
+                        break
+            elif baselen == 1:                 
+                dudx = []
+                base = int(base)
+                base = 0
+                integration = 0
+                dudx.append(integration)
+                du.append(dudx)
+                uvarinit = uvarinit + 1
+                if uvarinit == uvar:
+                    break
         #prints master array
         print(du)
+        
 
 elif calc == "diff":
     num = int(input("how many variables")) #input number of variables
