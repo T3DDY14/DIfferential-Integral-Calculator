@@ -303,7 +303,173 @@ elif calc == "differentiation":
         dydx = dydxval,"(",udiff,")"
         dydx = ''.join(dydx)
         print(dydx)
-
+    elif typex == "quotient":
+        y = input("please enter your equation with each variable seperated by ,")
+        y = y.split("/")
+        u = y[0]
+        v = y[1]
+        
+        uarr = u.split(",")
+        uar = np.array([])
+        varr = u.split(",")
+        var = np.array([])
+        for xupos, value in enumerate(uarr):
+            if "x" in value:
+                uar = np.append(uar,value)
+        uarlen = uar.size
+        uarinit = 0
+        udiff = []
+        for xvos, value in enumerate(varr):
+            if "x" in value:
+                var = np.append(var,value)
+        varlen = var.size
+        varinit = 0
+        vdiff = []
+        #dudx
+        while uarinit < uarlen:
+            uval = uar[uarinit]
+            #seperating values from x to convert to integers
+            uval = uval.split("x")
+            #assigning base value
+            uvalbase = uval[0]
+            #finding power value
+            for pos, i in enumerate(uval):
+                if "^" in i:
+                    pos = pos
+            uvalpower = uval[pos]
+            #splitting power from ^
+            uvalpower = uvalpower.split("^")
+            uvalpwrlen = len(uvalpower)
+            #assiging power
+            uvalpwrlen = uvalpwrlen - 1
+            #checking if power is there
+            if uvalpwrlen == 0:
+                uvalpower = 1
+            else:
+                uvalpower = uvalpower[uvalpwrlen]
+            #coverting strings to integers for calculation
+            uvalbase = int(uvalbase)
+            uvalpower = int(uvalpower)
+            #differential calculation
+            ubase = uvalbase*uvalpower
+            upower = uvalpower - 1
+            #checking if there is a power,if power = 1 then there is a x, if power = 0 then no x, if power > or < 1 then x^power
+            if upower == 1:
+                #creating symbol based on value
+                if ubase > 0:
+                    sym = "+"
+                elif ubase < 0:
+                    sym = "-"
+                #converting integers back to strings for simplification
+                ubase = str(ubase)
+                differential = sym,ubase,"x"
+                differential = ''.join(differential)
+            elif upower == 0:
+                #creating symbol based on value
+                if ubase > 0:
+                    sym = "+"
+                elif ubase < 0:
+                    sym = "-"
+                #converting integers back to strings for simplification
+                ubase = str(ubase)
+                differential = sym,ubase
+                differential = ''.join(differential)
+            elif upower != 1:
+                #creating symbol based on value
+                if ubase > 0:
+                    sym = "+"
+                elif ubase < 0:
+                    sym = "-"
+                if upower > 0:
+                    sympwr = "+"
+                elif upower < 0:
+                    synpwr = "-"
+                #converting integers back to strings for simplification
+                ubase = str(ubase)
+                upower = str(upower)
+                differential = sym,ubase,"x^",sympwr,upower
+                differential = ''.join(differential)
+            #Adding du/dx to array for use
+            udiff.append(differential)
+            #Restarting loop
+            uarinit = uarinit + 1
+            if uarinit == uarlen:
+                break
+        udiff = ''.join(udiff)
+        #dvdx
+        while varinit < varlen:
+            vval = var[varinit]
+            #seperating values from x to convert to integers
+            vval = vval.split("x")
+            #assigning base value
+            vvalbase = vval[0]
+            #finding power value
+            for pos, i in enumerate(vval):
+                if "^" in i:
+                    pos = pos
+            vvalpower = vval[pos]
+            #splitting power from ^
+            vvalpower = vvalpower.split("^")
+            vvalpwrlen = len(vvalpower)
+            #assiging power
+            vvalpwrlen = vvalpwrlen - 1
+            #checking if power is there
+            if vvalpwrlen == 0:
+                vvalpower = 1
+            else:
+                vvalpower = vvalpower[vvalpwrlen]
+            #coverting strings to integers for calculation
+            vvalbase = int(vvalbase)
+            vvalpower = int(vvalpower)
+            #differential calculation
+            vbase = vvalbase*vvalpower
+            vpower = vvalpower - 1
+            #checking if there is a power,if power = 1 then there is a x, if power = 0 then no x, if power > or < 1 then x^power
+            if vpower == 1:
+                #creating symbol based on value
+                if vbase > 0:
+                    sym = "+"
+                elif vbase < 0:
+                    sym = "-"
+                #converting integers back to strings for simplification
+                vbase = str(vbase)
+                differential = sym,vbase,"x"
+                differential = ''.join(differential)
+            elif vpower == 0:
+                #creating symbol based on value
+                if vbase > 0:
+                    sym = "+"
+                elif vbase < 0:
+                    sym = "-"
+                #converting integers back to strings for simplification
+                vbase = str(vbase)
+                differential = sym,vbase
+                differential = ''.join(differential)
+            elif vpower != 1:
+                #creating symbol based on value
+                if vbase > 0:
+                    sym = "+"
+                elif vbase < 0:
+                    sym = "-"
+                if vpower > 0:
+                    sympwr = "+"
+                elif vpower < 0:
+                    synpwr = "-"
+                #converting integers back to strings for simplification
+                vbase = str(vbase)
+                vpower = str(vpower)
+                differential = sym,vbase,"x^",sympwr,vpower
+                differential = ''.join(differential)
+            #Adding du/dx to array for use
+            vdiff.append(differential)
+            #Restarting loop
+            varinit = varinit + 1
+            if varinit == varlen:
+                break
+        vdiff = ''.join(vdiff)  
+        
+        dydx = v,"*",udiff,"-",u,"*",vdiff,"/",v,"^2"
+        
         
 elif calc == "logs":
     var = int(input("please enter a value"))
