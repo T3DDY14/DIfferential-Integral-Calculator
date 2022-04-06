@@ -45,7 +45,7 @@ if calc == "binomial":
         exit
 
 elif calc == "integration":
-    type = input("normal,substitution")
+    type = input("normal,substitution: ")
     if type == "normal":
     
         num = int(input("how many variables")) #input number of variables
@@ -79,6 +79,32 @@ elif calc == "integration":
         u = input("please enter the value of u with , seperating them")
         uvar = int(input("please enter the number of variables in u"))
         uarr = u.split(",", uvar)
+        sincostan = ['sin','cos','tan']
+        sctvar = []
+        sctloc = []
+        #checks if sincostan is in the input, and finds their location
+        for sct in sincostan:
+            sctv = re.findall(sct,u)
+            #adds the variable to master array
+            sctvar.append(sctv)
+        for sct in sincostan:
+            index = 0 
+            indexes = []
+            indexfound = 0
+            while indexfound != -1:
+                indexfound = u.find(sct,index)
+                if indexfound not in indexes:
+                    indexes.append(indexfound)
+                index += 1    
+            indexes.pop(-1)
+            print(indexes)
+            #adds variable location in string to master array
+            sctloc.append(indexes)
+        #finds the length of sctloc
+        sctloclen = len(sctloc)
+        
+        #print(sctvar)
+        #print(sctloc)
         #print(uarr)
         uvarinit = 0
         dx = []
@@ -149,7 +175,7 @@ elif calc == "integration":
         print(integral)
 
 elif calc == "differentiation":
-    typex = input("normal,chain,quotient")
+    typex = input("normal,chain,quotient: ")
     if typex == "normal":
         num = int(input("how many variables")) #input number of variables
         arr = np.array([])
@@ -460,7 +486,7 @@ elif calc == "differentiation":
                 vpower = str(vpower)
                 differential = sym,vbase,"x^",sympwr,vpower
                 differential = ''.join(differential)
-            #Adding du/dx to array for use
+            #Adding dv/dx to array for use
             vdiff.append(differential)
             #Restarting loop
             varinit = varinit + 1
