@@ -1,7 +1,48 @@
 from fractions import Fraction
 import numpy as np
+import math
 
-calc = input("integration or diff")
+calc = input("integration or diff or binomial: ")
+
+if calc == "binomial":
+    #variable inputs
+    a = int(input("please enter the A variable"))
+    b = int(input("please enter the B variabel"))
+    power = float(Fraction(input("enter the power")))
+    powercheck = (power).is_integer()
+    if powercheck == True:
+        if power == 0:
+            print("1")
+        elif power == 1:
+            print(a,"+",b)
+        elif power >= 2:
+            num = int(input("please enter how many variables you want"))
+            num2 = 0
+            print(a,"^",power)
+            while num2 <= num: #binomial expansion
+                num2 = num2 + 1
+                ncr = math.factorial(num)/math.factorial(num2)*math.factorial(num-num2)
+                print(ncr,"x",a,"^",power-1,"x",b,"^",num2)
+                print(ncr*(a**(power-1))*(b**num2))
+                power = power - 1
+                if num2 == num:
+                    break
+    elif powercheck == False:
+        num = int(input("please enter how many variables you want"))
+        num2 = 0
+        print(a,"^",power)
+        while num2 <= num: #binomial expansion
+            num2 = num2 + 1
+            ncr = math.factorial(num)/math.factorial(num2)*math.factorial(num-num2)
+            print(ncr,"x",a,"^",power-1,"x",b,"^",num2)
+            print(ncr*(a**(power-1))*(b**num2))
+            power = power - 1
+            if num2 == num:
+                break
+    else:
+        print("error")
+        exit
+
 if calc == "integration":
     num = int(input("how many variables")) #input number of variables
     arr = np.array([])
