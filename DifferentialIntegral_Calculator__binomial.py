@@ -180,6 +180,8 @@ elif calc == "differentiation":
         u = input("please enter the value of u, with each var seperated by a ,")
         #splitting values
         uarr = u.split(",")
+        yarr = y.split("(")
+        
         uar = np.array([])
         #splitting all x values from u
         for xpos, value in enumerate(uarr):
@@ -187,7 +189,7 @@ elif calc == "differentiation":
                 uar = np.append(uar,value)
         uarlen = uar.size
         uarinit = 0
-        udiff = np.array([])
+        udiff = []
         #starts du/dx 
         while uarinit < uarlen:
             uval = uar[uarinit]
@@ -253,13 +255,55 @@ elif calc == "differentiation":
                 differential = sym,ubase,"x^",sympwr,upower
                 differential = ''.join(differential)
             #Adding du/dx to array for use
-            udiff = np.append(udiff,differential)
+            udiff.append(differential)
             #Restarting loop
             uarinit = uarinit + 1
             if uarinit == uarlen:
                 break
-        print(udiff)
-        #print(equationarr)
+        udiff = ''.join(udiff)
+        #dy/du
+        ybase = yarr[0]
+        yarr = yarr[1]
+        yarr = yarr.split(")")
+        yarrlen = len(yarr)
+        ypwrloc = yarrlen - 1
+        ypwr = yarr[ypwrloc]
+        ypwr = ypwr.split("^")
+        ybase = int(ybase)
+        ypwr = ypwr[1]
+        if ypwr == None:
+            ypwr = 1
+        else:
+            ypwr = int(ypwr)
+        ybase = ybase*ypwr
+        ypwr = ypwr - 1
+        if ypwr == 1:
+            if ybase > 0:
+                    sym = "+"
+            elif ybase < 0:
+                    sym = "-"
+            ybase = str(ybase)
+            dydu = sym,ybase,"u"
+            dydu = ''.join(dydu)
+        elif ypwr != 1:
+            if ybase > 0:
+                    sym = "+"
+            elif ybase < 0:
+                    sym = "-"
+            if ypwr > 0:
+                    sympwr = "+"
+            elif ypwr < 0:
+                    synpwr = "-"
+            ybase = str(ybase)
+            ypwr = str(ypwr)
+            dydu = sym,ybase,"u^",sympwr,ypwr
+            dydu = ''.join(dydu)
+        dydxval = dydu.split("u")
+        dydxval = dydu[1]
+        dydx = dydxval,"(",udiff,")"
+        dydx = ''.join(dydx)
+        print(dydx)
+
         
 elif calc == "logs":
     var = int(input("please enter a value"))
