@@ -72,18 +72,21 @@ elif calc == "integration":
         print(arr) #prints the final array
         exit
     elif type == "sub":
+        form = input("please enter the formula without the power")
+        formpower = float(Fraction(input("please enter the power")))
         #user inputs 2x^4,9x^3,7x^2,8x,2 
         u = input("please enter the value of u with , seperating them")
         uvar = int(input("please enter the number of variables in u"))
         uarr = u.split(",", uvar)
         #print(uarr)
         uvarinit = 0
-        du = []
+        dx = []
         while uvarinit <= uvar:
             #creating inital u variables
             var = uarr[uvarinit]
             base = var.split("x")
             baselen = len(base)
+            ##print(base)
             power = var.split("^")
             base = base[0]
             #checking if there is a symbol
@@ -95,16 +98,19 @@ elif calc == "integration":
                 else:
                     power = power[1]
                 #string to integer conversion
-                base = int(base)
+                if base == '':
+                    base = 1
+                else:
+                    base = int(base)
                 power = int(power)
                 #integration
                 integration = base*power
                 power = power - 1
                 dudx = []
                 if power == 0:
-                    print(integration)
+                    ##print(integration)
                     dudx.append(integration)
-                    du.append(dudx)
+                    dx.append(dudx)
                     uvarinit = uvarinit +1
                     if uvarinit == uvar:
                         break
@@ -117,7 +123,7 @@ elif calc == "integration":
                     dudx.append(powersym)
                     dudx.append(power)
                     #adding array to master array
-                    du.append(dudx)
+                    dx.append(dudx)
                     #restarting loop
                     uvarinit = uvarinit + 1
                     if uvarinit == uvar:
@@ -128,13 +134,21 @@ elif calc == "integration":
                 base = 0
                 integration = 0
                 dudx.append(integration)
-                du.append(dudx)
+                dx.append(dudx)
                 uvarinit = uvarinit + 1
                 if uvarinit == uvar:
                     break
         #prints master array
-        print(du)
-        
+        ##print(dx)
+        du = ("1/",dx[0])
+        ulen = len(u)
+        ulen = ulen - 1
+        intformpower = formpower+1 
+        #combining u variables into one
+        u = (u[0],"+",u[ulen],"^",intformpower,"/",intformpower)
+        integral = (u,"*",du,"*",dx,"+C")
+        #outputs final integral udx
+        print(integral)
 
 elif calc == "diff":
     num = int(input("how many variables")) #input number of variables
