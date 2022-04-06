@@ -4,10 +4,10 @@ import math
 
 calc = input("integration or diff or binomial: ")
 
-if calc == "binomial":
+elif calc == "binomial":
     #variable inputs
     a = int(input("please enter the A variable"))
-    b = int(input("please enter the B variabel"))
+    b = float(fraction(input("please enter the B variable")))
     power = float(Fraction(input("enter the power")))
     powercheck = (power).is_integer()
     if powercheck == True:
@@ -43,7 +43,7 @@ if calc == "binomial":
         print("error")
         exit
 
-if calc == "integration":
+elif calc == "integration":
     num = int(input("how many variables")) #input number of variables
     arr = np.array([])
     while num > 0: #loop for number of variables
