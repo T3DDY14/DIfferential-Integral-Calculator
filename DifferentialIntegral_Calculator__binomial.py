@@ -1,8 +1,9 @@
 from fractions import Fraction
 import numpy as np
 import math
+import re
 
-calc = input("integration or diff or binomial: ")
+calc = input("integration or differentiation or binomial: ")
 
 if calc == "binomial":
     #variable inputs
@@ -44,7 +45,7 @@ if calc == "binomial":
         exit
 
 elif calc == "integration":
-    type = input("normal,sub")
+    type = input("normal,substitution")
     if type == "normal":
     
         num = int(input("how many variables")) #input number of variables
@@ -71,7 +72,7 @@ elif calc == "integration":
             num = num - 1
         print(arr) #prints the final array
         exit
-    elif type == "sub":
+    elif type == "substitution":
         form = input("please enter the formula without the power")
         formpower = float(Fraction(input("please enter the power")))
         #user inputs 2x^4,9x^3,7x^2,8x,2 
@@ -103,26 +104,24 @@ elif calc == "integration":
                 else:
                     base = int(base)
                 power = int(power)
-                #integration
+                #differentiation
                 integration = base*power
                 power = power - 1
                 dudx = []
                 if power == 0:
-                    ##print(integration)
+                    #adding result to array
                     dudx.append(integration)
                     dx.append(dudx)
                     uvarinit = uvarinit +1
                     if uvarinit == uvar:
                         break
                 else:
-                    #test output 
-                    ##print(integration,"x^",power)
-                    #adding result to array
                     powersym = "x^"
+                    #adding dudx to an array
                     dudx.append(integration)
                     dudx.append(powersym)
                     dudx.append(power)
-                    #adding array to master array
+                    #adding dudxarray to master array
                     dx.append(dudx)
                     #restarting loop
                     uvarinit = uvarinit + 1
@@ -139,7 +138,6 @@ elif calc == "integration":
                 if uvarinit == uvar:
                     break
         #prints master array
-        ##print(dx)
         du = ("1/",dx[0])
         ulen = len(u)
         ulen = ulen - 1
@@ -150,32 +148,119 @@ elif calc == "integration":
         #outputs final integral udx
         print(integral)
 
-elif calc == "diff":
-    num = int(input("how many variables")) #input number of variables
-    arr = np.array([])
-    while num > 0: #loop for number of variables
-        #variable inputs
-        var = float(Fraction(input("enter the base")));
-        letter = input("enter the letter");
-        power = float(Fraction(input("enter the power")));
-        #differentiation
-        var = var*power
-        power = power - 1
-        #Simplication + cleanup
-        if power == 1.0:
-            var = str(var)
-            varone = (var,letter)
-            varone = ''.join(varone)
-        else:
-            var = str(var)
-            power = str(power)
-            varone = (var,letter,"^",power)
-            varone = ''.join(varone)
-        arr = np.append(arr,varone)
-        num = num - 1
-    print(arr) #prints the final array
-    exit
-
+elif calc == "differentiation":
+    typex = input("normal,chain")
+    if typex == "normal":
+        num = int(input("how many variables")) #input number of variables
+        arr = np.array([])
+        while num > 0: #loop for number of variables
+            #variable inputs
+            var = float(Fraction(input("enter the base")));
+            letter = input("enter the letter");
+            power = float(Fraction(input("enter the power")));
+            #differentiation
+            var = var*power
+            power = power - 1
+            #Simplication + cleanup
+            if power == 1.0:
+                var = str(var)
+                varone = (var,letter)
+                varone = ''.join(varone)
+            else:
+                var = str(var)
+                power = str(power)
+                varone = (var,letter,"^",power)
+                varone = ''.join(varone)
+            arr = np.append(arr,varone)
+            num = num - 1
+        print(arr) #prints the final array
+        exit
+    elif typex == "chain":
+        y = input("please enter the equation")
+        u = input("please enter the value of u, with each var seperated by a ,")
+        #splitting values
+        uarr = u.split(",")
+        uar = np.array([])
+        #splitting all x values from u
+        for xpos, value in enumerate(uarr):
+            if "x" in value:
+                uar = np.append(uar,value)
+        uarlen = uar.size
+        uarinit = 0
+        udiff = np.array([])
+        #starts du/dx 
+        while uarinit < uarlen:
+            uval = uar[uarinit]
+            #seperating values from x to convert to integers
+            uval = uval.split("x")
+            #assigning base value
+            uvalbase = uval[0]
+            #finding power value
+            for pos, i in enumerate(uval):
+                if "^" in i:
+                    pos = pos
+            uvalpower = uval[pos]
+            #splitting power from ^
+            uvalpower = uvalpower.split("^")
+            uvalpwrlen = len(uvalpower)
+            #assiging power
+            uvalpwrlen = uvalpwrlen - 1
+            #checking if power is there
+            if uvalpwrlen == 0:
+                uvalpower = 1
+            else:
+                uvalpower = uvalpower[uvalpwrlen]
+            #coverting strings to integers for calculation
+            uvalbase = int(uvalbase)
+            uvalpower = int(uvalpower)
+            #differential calculation
+            ubase = uvalbase*uvalpower
+            upower = uvalpower - 1
+            #checking if there is a power,if power = 1 then there is a x, if power = 0 then no x, if power > or < 1 then x^power
+            if upower == 1:
+                #creating symbol based on value
+                if ubase > 0:
+                    sym = "+"
+                elif ubase < 0:
+                    sym = "-"
+                #converting integers back to strings for simplification
+                ubase = str(ubase)
+                differential = sym,ubase,"x"
+                differential = ''.join(differential)
+            elif upower == 0:
+                #creating symbol based on value
+                if ubase > 0:
+                    sym = "+"
+                elif ubase < 0:
+                    sym = "-"
+                #converting integers back to strings for simplification
+                ubase = str(ubase)
+                differential = sym,ubase
+                differential = ''.join(differential)
+            elif upower != 1:
+                #creating symbol based on value
+                if ubase > 0:
+                    sym = "+"
+                elif ubase < 0:
+                    sym = "-"
+                if upower > 0:
+                    sympwr = "+"
+                elif upower < 0:
+                    synpwr = "-"
+                #converting integers back to strings for simplification
+                ubase = str(ubase)
+                upower = str(upower)
+                differential = sym,ubase,"x^",sympwr,upower
+                differential = ''.join(differential)
+            #Adding du/dx to array for use
+            udiff = np.append(udiff,differential)
+            #Restarting loop
+            uarinit = uarinit + 1
+            if uarinit == uarlen:
+                break
+        print(udiff)
+        #print(equationarr)
+        
 elif calc == "logs":
     var = int(input("please enter a value"))
     base = int(input("please enter the base value"))
