@@ -149,7 +149,7 @@ elif calc == "integration":
         print(integral)
 
 elif calc == "differentiation":
-    typex = input("normal,chain")
+    typex = input("normal,chain,quotient")
     if typex == "normal":
         num = int(input("how many variables")) #input number of variables
         arr = np.array([])
@@ -468,8 +468,9 @@ elif calc == "differentiation":
                 break
         vdiff = ''.join(vdiff)  
         
-        dydx = v,"*",udiff,"-",u,"*",vdiff,"/",v,"^2"
-        
+        dydx = "(",v,"*",udiff,")","-","(",u,"*",vdiff,")","/","(",v,")","^2"
+        dydx = ''.join(dydx)
+        print(dydx)
         
 elif calc == "logs":
     var = int(input("please enter a value"))
