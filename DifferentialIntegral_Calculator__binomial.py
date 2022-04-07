@@ -102,10 +102,22 @@ elif calc == "integration":
             sctloc.append(indexes)
         #finds the length of sctloc
         sctloclen = len(sctloc)
+        sctinit = 0
+        difsct = []
+        #sct differential
+        while sctinit < sctloclen:
+            if sctvar[sctinit] == "sin":
+                difsct.append("cos(x)")
+            elif sctvar[sctinit] == "cos":
+                difsct.append("-sin(x)")
+            elif sctvar[sctinit] == "tan":
+                difsct.append("sec^2(x)")
+            sctinit = sctinit + 1
+            if sctinit == sctloclen:
+                break
+        print(difsct)
         
-        #print(sctvar)
-        #print(sctloc)
-        #print(uarr)
+
         uvarinit = 0
         dx = []
         while uvarinit <= uvar:
