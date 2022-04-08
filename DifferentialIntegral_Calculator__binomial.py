@@ -79,44 +79,6 @@ elif calc == "integration":
         u = input("please enter the value of u with , seperating them")
         uvar = int(input("please enter the number of variables in u"))
         uarr = u.split(",", uvar)
-        sincostan = ['sin','cos','tan']
-        sctvar = []
-        sctloc = []
-        #checks if sincostan is in the input, and finds their location
-        for sct in sincostan:
-            sctv = re.findall(sct,u)
-            #adds the variable to master array
-            sctvar.append(sctv)
-        for sct in sincostan:
-            index = 0 
-            indexes = []
-            indexfound = 0
-            while indexfound != -1:
-                indexfound = u.find(sct,index)
-                if indexfound not in indexes:
-                    indexes.append(indexfound)
-                index += 1    
-            indexes.pop(-1)
-            print(indexes)
-            #adds variable location in string to master array
-            sctloc.append(indexes)
-        #finds the length of sctloc
-        sctloclen = len(sctloc)
-        sctinit = 0
-        difsct = []
-        #sct differential
-        while sctinit < sctloclen:
-            if sctvar[sctinit] == "sin":
-                difsct.append("cos(x)")
-            elif sctvar[sctinit] == "cos":
-                difsct.append("-sin(x)")
-            elif sctvar[sctinit] == "tan":
-                difsct.append("sec^2(x)")
-            sctinit = sctinit + 1
-            if sctinit == sctloclen:
-                break
-        print(difsct)
-        
 
         uvarinit = 0
         dx = []
