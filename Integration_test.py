@@ -10,34 +10,48 @@ def differential(equationsplit):
     dif = []
     while sctinit < sctloclen:
         var = equationsplit[sctinit] #puting variable from array into a string variable
+        print(var)
         #checking if the variable is a trig function or a normal
         if "sin" in var:
             #splitting the variable at the trig function
             varsplit = var.split("sin")
+            print(varsplit)
             #replacing the empty variable with the new trig function
             varsplit[0] = "cos"
+            print(varsplit)
             #joining the array back together for another split
             varwhole = "".join(varsplit)
+            print(varwhole)
             #splitting the array for the x component
             varsplit = varwhole.split("(")
+            print(varsplit)
             #saving the first variable for use later
             varone = varsplit[0]
+            print(varone)
             #making the split variable one variable
             varsplit = varsplit[1]
+            print(varsplit)
             #splitting the closed bracked to work on variable
             varsplit = varsplit.split(")")
+            print(varsplit)
             #taking the new variable and storing it
             vartwo = varsplit[0]
+            print(vartwo)
             #splitting the new variable at x to take the base and power
             vartwo = vartwo.split("x")
+            print(vartwo)
             #saving the x variable base
             vartwobase = vartwo[0]
+            print(vartwobase)
             #making the array one variable again
             vartwo = vartwo[1]
+            print(vartwo)
             #splitting the array at ^ to find the power
             vartwo = vartwo.split("^")
+            print(vartwo)
             #checking if there is a power present
             vartwolen = len(vartwo)
+            
             #if there is no power then power = 1
             if vartwolen == 1:
                 vartwopower = 1
@@ -45,6 +59,8 @@ def differential(equationsplit):
             else:
                 vartwopower = vartwo[1]
             #starting the differential
+            vartwobase = int(vartwobase)
+            vartwopower = int(vartwopower)
             vartwobase = vartwobase*vartwopower
             vartwopower = vartwopower - 1
             #converting integers back to strings for manipulation
@@ -54,19 +70,16 @@ def differential(equationsplit):
                 vartwopower = str(vartwopower)
                 #joining both variables together
                 dydx = varone,"(",vartwobase,"x^",vartwopower,")"
-                dydx = ''.join(dydx)
-                #adding the variable back to inital array
-                dif.append(dydx)
+                dydx = ''.join(dydx)   
             #checking if the power == 1 then there is no need for a power
             elif vartwopower == 1:
                 dydx = varone,"(",vartwobase,"x",")"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)    
             #checking if power == 0 then there is no need for a power or x variable
             elif vartwopower == 0:
                 dydx = varone,"(",vartwobase,")"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)    
+            #replacing original variable with new one
             equationsplit[sctinit] = dydx
         elif "cos" in var:
             varsplit = var.split("cos")
@@ -90,22 +103,21 @@ def differential(equationsplit):
             else:
                 vartwopower = vartwo[1]
             #dydx
+            vartwobase = int(vartwobase)
+            vartwopower = int(vartwopower)
             vartwobase = vartwobase*vartwopower
             vartwopower = vartwopower - 1
             vartwobase = str(vartwobase)
             if vartwopower > 1:
                 vartwopower = str(vartwopower)
                 dydx = varone,"(",vartwobase,"x^",vartwopower,")"
-                dydx = ''.join(dydx)
-                dif.append(dydx))
+                dydx = ''.join(dydx)               
             elif vartwopower == 1:
                 dydx = varone,"(",vartwobase,"x",")"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)              
             elif vartwopower == 0:
                 dydx = varone,"(",vartwobase,")"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)              
             equationsplit[sctinit] = dydx
         if "tan" in var:
             varsplit = var.split("tan")
@@ -129,22 +141,21 @@ def differential(equationsplit):
             else:
                 vartwopower = vartwo[1]
             #dydx
+            vartwobase = int(vartwobase)
+            vartwopower = int(vartwopower)
             vartwobase = vartwobase*vartwopower
             vartwopower = vartwopower - 1
             vartwobase = str(vartwobase)
             if vartwopower > 1:
                 vartwopower = str(vartwopower)
                 dydx = varone,"(",vartwobase,"x^",vartwopower,")"
-                dydx = ''.join(dydx)
-                dif.append(dydx))
+                dydx = ''.join(dydx)               
             elif vartwopower == 1:
                 dydx = varone,"(",vartwobase,"x",")"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)               
             elif vartwopower == 0:
                 dydx = varone,"(",vartwobase,")"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)                
             equationsplit[sctinit] = dydx
         if "cot" in var:
             varsplit = var.split("cot")
@@ -168,22 +179,21 @@ def differential(equationsplit):
             else:
                 vartwopower = vartwo[1]
             #dydx
+            vartwobase = int(vartwobase)
+            vartwopower = int(vartwopower)
             vartwobase = vartwobase*vartwopower
             vartwopower = vartwopower - 1
             vartwobase = str(vartwobase)
             if vartwopower > 1:
                 vartwopower = str(vartwopower)
                 dydx = varone,"(",vartwobase,"x^",vartwopower,")"
-                dydx = ''.join(dydx)
-                dif.append(dydx))
+                dydx = ''.join(dydx)                
             elif vartwopower == 1:
                 dydx = varone,"(",vartwobase,"x",")"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)               
             elif vartwopower == 0:
                 dydx = varone,"(",vartwobase,")"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)               
             equationsplit[sctinit] = dydx  
         if "sec" in var:
             varsplit = var.split("sec")
@@ -208,22 +218,21 @@ def differential(equationsplit):
             else:
                 vartwopower = vartwo[1]
             #dydx
+            vartwobase = int(vartwobase)
+            vartwopower = int(vartwopower)
             vartwobase = vartwobase*vartwopower
             vartwopower = vartwopower - 1
             vartwobase = str(vartwobase)
             if vartwopower > 1:
                 vartwopower = str(vartwopower)
                 dydx = varone[0],"(",vartwobase,"x^",vartwopower,")",varone[1],"(",vartwobase,"x^",vartwopower,")"
-                dydx = ''.join(dydx)
-                dif.append(dydx))
+                dydx = ''.join(dydx)               
             elif vartwopower == 1:
                 dydx = varone[0],"(",vartwobase,"x",")",varone[1],"(",vartwobase,"x",")"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)            
             elif vartwopower == 0:
                 dydx = varone[0],"(",vartwobase,")",varone[1],"(",vartwobase,")"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)            
             equationsplit[sctinit] = dydx
         if "cosec" in var:
             varsplit = var.split("cosec")
@@ -248,24 +257,23 @@ def differential(equationsplit):
             else:
                 vartwopower = vartwo[1]
             #dydx
+            vartwobase = int(vartwobase)
+            vartwopower = int(vartwopower)
             vartwobase = vartwobase*vartwopower
             vartwopower = vartwopower - 1
             vartwobase = str(vartwobase)
             if vartwopower > 1:
                 vartwopower = str(vartwopower)
                 dydx = varone[0],"(",vartwobase,"x^",vartwopower,")",varone[1],"(",vartwobase,"x^",vartwopower,")"
-                dydx = ''.join(dydx)
-                dif.append(dydx))
+                dydx = ''.join(dydx)               
             elif vartwopower == 1:
                 dydx = varone[0],"(",vartwobase,"x",")",varone[1],"(",vartwobase,"x",")"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)            
             elif vartwopower == 0:
                 dydx = varone[0],"(",vartwobase,")",varone[1],"(",vartwobase,")"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)           
             equationsplit[sctinit] = dydx
-        elif "x" in var:
+        elif "y" in var:
             varsplit = var.split("x")
             print(varsplit)
             varbase = varsplit[0]
@@ -282,16 +290,13 @@ def differential(equationsplit):
             if varpower > 1:
                 varpower = str(varpower)
                 dydx = varone,"x^",varpower
-                dydx = ''.join(dydx)
-                dif.append(dydx))
+                dydx = ''.join(dydx)                
             elif varpower == 1:
                 dydx = varone,"x"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)              
             elif varpower == 0:
                 dydx = varone
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)               
             equationsplit[sctinit] = dydx            
         else:
             print("oops")                    
@@ -299,7 +304,6 @@ def differential(equationsplit):
         if sctinit == sctloclen:
             break
 def integral(equationsplit):
-
     trigfunction = ['sin','cos','tan','sec','cosec','cot']
     sctloclen = len(equationsplit)
     sctinit = 0
@@ -334,16 +338,13 @@ def integral(equationsplit):
             if vartwopower > 1:
                 vartwopower = str(vartwopower)
                 dydx = varone,"(",vartwobase,"x^",vartwopower,")","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx))
+                dydx = ''.join(dydx)                
             elif vartwopower == 1:
                 dydx = varone,"(",vartwobase,"x",")","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)               
             elif vartwopower == 0:
                 dydx = varone,"(",vartwobase,")","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)               
             equationsplit[sctinit] = dydx
         elif "cos" in var:
             varsplit = var.split("cos")
@@ -373,16 +374,13 @@ def integral(equationsplit):
             if vartwopower > 1:
                 vartwopower = str(vartwopower)
                 dydx = varone,"(",vartwobase,"x^",vartwopower,")","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx))
+                dydx = ''.join(dydx)               
             elif vartwopower == 1:
                 dydx = varone,"(",vartwobase,"x",")","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)               
             elif vartwopower == 0:
                 dydx = varone,"(",vartwobase,")","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)               
             equationsplit[sctinit] = dydx
         if "tan" in var:
             varsplit = var.split("tan")
@@ -412,16 +410,13 @@ def integral(equationsplit):
             if vartwopower > 1:
                 vartwopower = str(vartwopower)
                 dydx = varone,"(",vartwobase,"x^",vartwopower,")","|","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx))
+                dydx = ''.join(dydx)                
             elif vartwopower == 1:
                 dydx = varone,"(",vartwobase,"x",")","|","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)               
             elif vartwopower == 0:
                 dydx = varone,"(",vartwobase,")","|","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)                
             equationsplit[sctinit] = dydx
         if "cot" in var:
             varsplit = var.split("cot")
@@ -451,16 +446,13 @@ def integral(equationsplit):
             if vartwopower > 1:
                 vartwopower = str(vartwopower)
                 dydx = varone,"(",vartwobase,"x^",vartwopower,")","|","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx))
+                dydx = ''.join(dydx)                
             elif vartwopower == 1:
                 dydx = varone,"(",vartwobase,"x",")","|","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)                
             elif vartwopower == 0:
                 dydx = varone,"(",vartwobase,")","|","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)               
             equationsplit[sctinit] = dydx  
         if "sec" in var:
             varsplit = var.split("sec")
@@ -491,16 +483,13 @@ def integral(equationsplit):
             if vartwopower > 1:
                 vartwopower = str(vartwopower)
                 dydx = varone[0],"(",vartwobase,"x^",vartwopower,")","+",varone[1],"(",vartwobase,"x^",vartwopower,")",")","|","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx))
+                dydx = ''.join(dydx)                
             elif vartwopower == 1:
                 dydx = varone[0],"(",vartwobase,"x",")","+",varone[1],"(",vartwobase,"x",")",")","|","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)               
             elif vartwopower == 0:
                 dydx = varone[0],"(",vartwobase,")","+",varone[1],"(",vartwobase,")",")","|","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)              
             equationsplit[sctinit] = dydx
         if "cosec" in var:
             varsplit = var.split("cosec")
@@ -531,16 +520,13 @@ def integral(equationsplit):
             if vartwopower > 1:
                 vartwopower = str(vartwopower)
                 dydx = varone[0],"(",vartwobase,"x^",vartwopower,")","-",varone[1],"(",vartwobase,"x^",vartwopower,")","|","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx))
+                dydx = ''.join(dydx)              
             elif vartwopower == 1:
                 dydx = varone[0],"(",vartwobase,"x",")","-",varone[1],"(",vartwobase,"x",")","|","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)     
             elif vartwopower == 0:
                 dydx = varone[0],"(",vartwobase,")","-",varone[1],"(",vartwobase,")","|","+C"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)         
             equationsplit[sctinit] = dydx
         elif "x" in var:
             varsplit = var.split("x")
@@ -559,25 +545,23 @@ def integral(equationsplit):
             if varpower > 1:
                 varpower = str(varpower)
                 dydx = varone,"x^",varpower
-                dydx = ''.join(dydx)
-                dif.append(dydx))
+                dydx = ''.join(dydx)                
             elif varpower == 1:
                 dydx = varone,"x"
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)    
             elif varpower == 0:
                 dydx = varone
-                dydx = ''.join(dydx)
-                dif.append(dydx)
+                dydx = ''.join(dydx)     
             equationsplit[sctinit] = dydx            
         else:
             print("oops")                    
         sctinit = sctinit + 1
         if sctinit == sctloclen:
             break
-def substituion(equationsplit):
-def chain(equationsplit):
-def quotient(equationsplit):
+            
+#def substituion(equationsplit):
+#def chain(equationsplit):
+#def quotient(equationsplit):
 
 
 
@@ -608,6 +592,6 @@ elif choice == "integral":
     integral(equationsplit)
     
 
-print(equationsplit)
+print(equation," == ",equationsplit)
 
 
