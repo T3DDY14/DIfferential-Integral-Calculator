@@ -1228,7 +1228,7 @@ def chain(equation): # working on : needs dy/du
     differential(equationsplit)
     uvarnew = equationsplit
     # find a way to dy/du    
-def quotient(equationsplit): # done, needs testing
+def quotient(equation): # done, needs testing
     equation = re.split("([/])",equation)
     divloc = equation.index("/")
     uvarloc = divloc - 1
