@@ -3,7 +3,7 @@ import numpy as np
 import math
 import re
 
-def differential(equationsplit):
+def differential(equationsplit): # done
     trigfunction = ['sin','cos','tan','sec','cosec','cot']
     sctloclen = len(equationsplit)
     sctinit = 0
@@ -583,7 +583,7 @@ def differential(equationsplit):
         sctinit = sctinit + 1
         if sctinit == sctloclen:
             break
-def integral(equationsplit):
+def integral(equationsplit): # done
     trigfunction = ['sin','cos','tan','sec','cosec','cot']
     sctloclen = len(equationsplit)
     sctinit = 0
@@ -1164,23 +1164,116 @@ def integral(equationsplit):
         sctinit = sctinit + 1
         if sctinit == sctloclen:
             break        
-#def substituion(equationsplit):
-#def chain(equationsplit):
-#def quotient(equationsplit):
-
+def substituion(equation): # done
+    u = equation
+    equation = re.split("([(])",equation)
+    print(equation,"equation")
+    bsloc = equation.index("(")
+    yvarloc = bsloc - 1
+    uvarloc = bsloc + 1
+    uvar = equation[uvarloc]
+    uvar = re.split("([)])",uvar)
+    uvarlen = len(uvar)   
+    uvarlen = uvarlen - 1
+    del uvar[uvarlen]
+    uvarlen = uvarlen - 1
+    del uvar[uvarlen]
+    uvar = ''.join(uvar)
+    yvarbase = equation[yvarloc]
+    equation = ''.join(equation)
+    equation = re.split("([)])",equation)
+    beloc = equation.index(")")
+    yvarpwrloc = beloc + 1
+    yvarpwr = equation[yvarpwrloc]
+    if yvarpwr == None:
+        yvarpwr = 1
+    else:
+        yvarpwr = yvarpwr    
+    yvar = yvarbase,"(u)",yvarpwr
+    yvar = ''.join(yvar)
+    equationsplit = re.split('([+-])',uvar)
+    differential(equationsplit)
+    uvarnew = equationsplit
+    dydx = u,"*",uvarnew
+    dydx = ''.join(dydx)
+    equationsplit = dydx
+def chain(equation): # working on : needs dy/du
+    u = equation
+    equation = re.split("([(])",equation)
+    print(equation,"equation")
+    bsloc = equation.index("(")
+    yvarloc = bsloc - 1
+    uvarloc = bsloc + 1
+    uvar = equation[uvarloc]
+    uvar = re.split("([)])",uvar)
+    uvarlen = len(uvar)   
+    uvarlen = uvarlen - 1
+    del uvar[uvarlen]
+    uvarlen = uvarlen - 1
+    del uvar[uvarlen]
+    uvar = ''.join(uvar)
+    yvarbase = equation[yvarloc]
+    equation = ''.join(equation)
+    equation = re.split("([)])",equation)
+    beloc = equation.index(")")
+    yvarpwrloc = beloc + 1
+    yvarpwr = equation[yvarpwrloc]
+    if yvarpwr == None:
+        yvarpwr = 1
+    else:
+        yvarpwr = yvarpwr    
+    yvar = yvarbase,"(u)",yvarpwr
+    yvar = ''.join(yvar)
+    equationsplit = re.split('([+-])',uvar)
+    differential(equationsplit)
+    uvarnew = equationsplit
+    # find a way to dy/du    
+def quotient(equationsplit): # done, needs testing
+    equation = re.split("([/])",equation)
+    divloc = equation.index("/")
+    uvarloc = divloc - 1
+    vvarloc = divloc + 1
+    uvar = equation[uvarloc]
+    vvar = equation[uvarloc]
+    uvar = ''.join(uvar)
+    vvar = ''.join(vvar)
+    equationsplit = re.split('([+-])',uvar)
+    differential(equationsplit)
+    uvarnew = equationsplit
+    equationsplit = re.split('([+-])',vvar)
+    differential(equationsplit)
+    vvarnew = equationsplit
+    dydx = uvarnew,"/",vvarnew
+    dydx = ''.join(dydx)
+    equationsplit = dydx
+    
+   
+    
+    
+print("please use y for + and u for - for multiple variables in brackets")
 choice = input("differential,integral")           
 equation = input("please enter the equation")
-equationsplit = re.split('([+-])',equation)
+
 if choice == "differential":
     secondarychoice = input("normal,chain,quotient")
     if secondarychoice == "normal":
+        equationsplit = re.split('([+-])',equation)
         differential(equationsplit)
+        print(equation," == ",equationsplit)
     elif secondarychoice == "chain":
-        chain(equationsplit)
+        chain(equation)
     elif secondarychoice == "quotient":
-        quotient(equationsplit)
+        quotient(equation)
 elif choice == "integral":
-    integral(equationsplit)
-print(equation," == ",equationsplit)
+    secondarychoice = input("normal,substituion")
+    if secondarychoice == "normal":
+        equationsplit = re.split('([+-])',equation)
+        integral(equationsplit)
+        print(equation," == ",equationsplit)
+    elif secondarychoice == "substituion":
+        substituion(equation)
+        print(equation," == ",equationsplit)
+        
+
 
 
