@@ -549,16 +549,16 @@ def differential(equationsplit): # done
             equationsplit[sctinit] = dydx
             print(vartwo)
         elif "x" in var:
-            print("doing x var")
+            ##print("doing x var")
             varsplit = var.split("x")
-            print(varsplit)
+            ##print(varsplit)
             varbase = varsplit[0]
-            print(varbase,"varbase")
+            ##print(varbase,"varbase")
             if "^" in varsplit[1]:
                 varsplit = ''.join(varsplit)
                 varsplit = varsplit.split("^")
                 varpower = varsplit[1]
-                print(varpower,"varpower")
+                ##print(varpower,"varpower")
             elif "^" not in varsplit[1]:
                 varpower = 1
             #dydx
@@ -1196,14 +1196,16 @@ def substituion(equation): # done
     uvarnew = equationsplit
     dydx = u,"*",uvarnew
     dydx = ''.join(dydx)
-    equationsplit = dydx
-def chain(equation): # working on : needs dy/du
+    return dydx
+def chain(equation): # done needs testing
     u = equation
     equation = re.split("([(])",equation)
-    print(equation,"equation")
+    ##print(equation,"equation")
     bsloc = equation.index("(")
-    yvarloc = bsloc - 1
+    ##yvarloc = bsloc - 1
+    #finding the u variable
     uvarloc = bsloc + 1
+    #saving uvariable for use
     uvar = equation[uvarloc]
     uvar = re.split("([)])",uvar)
     uvarlen = len(uvar)   
@@ -1211,24 +1213,52 @@ def chain(equation): # working on : needs dy/du
     del uvar[uvarlen]
     uvarlen = uvarlen - 1
     del uvar[uvarlen]
+    #getting uvariable without brackets
     uvar = ''.join(uvar)
-    yvarbase = equation[yvarloc]
-    equation = ''.join(equation)
-    equation = re.split("([)])",equation)
-    beloc = equation.index(")")
-    yvarpwrloc = beloc + 1
-    yvarpwr = equation[yvarpwrloc]
-    if yvarpwr == None:
-        yvarpwr = 1
-    else:
-        yvarpwr = yvarpwr    
-    yvar = yvarbase,"(u)",yvarpwr
-    yvar = ''.join(yvar)
+    ##yvarbase = equation[yvarloc]
+    ##equation = ''.join(equation)
+    ##equation = re.split("([)])",equation)
+    ##beloc = equation.index(")")
+    ##yvarpwrloc = beloc + 1
+    ##yvarpwr = equation[yvarpwrloc]
+    ##if yvarpwr == None:
+    ##    yvarpwr = 1
+    ##else:
+    ##    yvarpwr = yvarpwr    
+    ##yvar = yvarbase,"(u)",yvarpwr
+    ##yvar = ''.join(yvar)
+    #differntial of u var
     equationsplit = re.split('([+-])',uvar)
     differential(equationsplit)
-    uvarnew = equationsplit
-    # find a way to dy/du    
-def quotient(equation): # done, needs testing
+    uvarnew = equationsplit 
+    uvarnew = ''.join(uvarnew)
+    #finding what y is
+    yeqfrst = re.split("([(])",u)
+    yeqscnd = re.split("([)])",u)
+    ybsloc = yeqfrst.index("(")
+    ybsscndloc = yeqscnd.index(")")
+    #finding the y base
+    ysbaseloc = ybsloc - 1
+    ysbasescndloc = ybsscndloc + 1
+    yeqbase = yeqfrst[ysbaseloc]
+    #finding the y power
+    yeqpwr = yeqscnd[ysbasescndloc]
+    #differential of y power and base
+    equationsplit = re.split('([+-])',yeqbase)
+    differential(equationsplit)
+    yvarbse = equationsplit
+    yvarbse = ''.join(yvarbse)
+    equationsplit = re.split('([+-])',yeqpwr)
+    differential(equationsplit)
+    yvarpwr = equationsplit
+    yvarpwr = ''.join(yvarpwr)
+    #creating final output
+    dydx = yvarbse,"(",uvarnew,")",yvarpwr
+    
+    print(dydx,"equationfinal")
+    dydx = ''.join(dydx)
+    return dydx
+def quotient(equation): # done needs testing
     equation = re.split("([/])",equation)
     divloc = equation.index("/")
     uvarloc = divloc - 1
@@ -1245,34 +1275,42 @@ def quotient(equation): # done, needs testing
     vvarnew = equationsplit
     dydx = uvarnew,"/",vvarnew
     dydx = ''.join(dydx)
-    equationsplit = dydx
-    
+    return dydx
+def product(equation): # needs starting
+def reversechain(equation): # needs starting
+def parts(equation): # needs starting
    
     
     
-print("please use y for + and u for - for multiple variables in brackets")
-choice = input("differential,integral")           
-equation = input("please enter the equation")
 
+choice = input("differential,integral")           
 if choice == "differential":
     secondarychoice = input("normal,chain,quotient")
+    print("please use y for + and u for - for multiple variables in brackets, only for use when using normal")
+    equation = input("please enter the equation")
+    bgnequation = equation
     if secondarychoice == "normal":
         equationsplit = re.split('([+-])',equation)
         differential(equationsplit)
-        print(equation," == ",equationsplit)
+        print(bgnequation," == ",equationsplit)
     elif secondarychoice == "chain":
-        chain(equation)
+        equationchain = chain(equation)
+        print(bgnequation ," == ",equationchain)
     elif secondarychoice == "quotient":
-        quotient(equation)
+        equationquotient = quotient(equation)
+        print(bgnequation ," == ",equationquotient)
 elif choice == "integral":
     secondarychoice = input("normal,substituion")
+    print("please use y for + and u for - for multiple variables in brackets, only for use when using normal")
+    equation = input("please enter the equation")
+    bgnequation = equation
     if secondarychoice == "normal":
         equationsplit = re.split('([+-])',equation)
         integral(equationsplit)
-        print(equation," == ",equationsplit)
+        print(bgnequation," == ",equationsplit)
     elif secondarychoice == "substituion":
-        substituion(equation)
-        print(equation," == ",equationsplit)
+        equationsub = substituion(equation)
+        print(bgnequation," == ",equationsub)
         
 
 
