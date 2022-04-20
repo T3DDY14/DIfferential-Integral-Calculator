@@ -1277,8 +1277,11 @@ def quotient(equation): # done needs testing
     dydx = ''.join(dydx)
     return dydx
 def product(equation): # needs starting
+    print("placeholder")
 def reversechain(equation): # needs starting
+    print("placeholder")
 def parts(equation): # needs starting
+    print("placeholder")
    
     
     
@@ -1299,6 +1302,9 @@ if choice == "differential":
     elif secondarychoice == "quotient":
         equationquotient = quotient(equation)
         print(bgnequation ," == ",equationquotient)
+    elif secondarychoice == "product":
+        equationproduct = product(equation)
+        print(bgnequation ," == ",equationproduct)
 elif choice == "integral":
     secondarychoice = input("normal,substituion")
     print("please use y for + and u for - for multiple variables in brackets, only for use when using normal")
@@ -1311,7 +1317,14 @@ elif choice == "integral":
     elif secondarychoice == "substituion":
         equationsub = substituion(equation)
         print(bgnequation," == ",equationsub)
+    elif secondarychoice == "reversechain":
+        equationrevchain = reversechain(equation)
+        print(bgnequation," == ",equationrevchain)
+    elif secondarychoice == "parts":
+        equationparts = parts(equation)
+        print(bgnequation," == ",equationparts)
         
+input('Press ENTER to exit') 
 
 
 
