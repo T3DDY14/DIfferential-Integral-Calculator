@@ -1,7 +1,8 @@
 from fractions import Fraction
-import numpy as np
+#import numpy as np
 import math
 import re
+import tkinter as tk
 
 def differential(equationsplit): # done
     trigfunction = ['sin','cos','tan','sec','cosec','cot']
@@ -28,7 +29,7 @@ def differential(equationsplit): # done
             else:
                 varsplitbase = varsplit[0]            
                 varsplitbase = Fraction(varsplitbase)
-                #replacing the empty variable with the new trig function
+                #replacing the empty variable with the new trig function
                 varsplit[1] = "cos"
                 #saving the first variable for use later
                 varone = varsplit[1]     
@@ -1125,6 +1126,7 @@ def differential(equationsplit): # done
         sctinit = sctinit + 1
         if sctinit == sctloclen:
             break
+    
 def integral(equationsplit): # done
     trigfunction = ['sin','cos','tan','sec','cosec','cot']
     sctloclen = len(equationsplit)
@@ -1824,8 +1826,39 @@ def reversechain(equation): # needs starting
     print("placeholder")
 def parts(equation): # needs starting
     print("placeholder")
-   
+def output():
+    inp = maininput.get(1.0,"end-1c")
+    lblin.config(text = "input: "+inp)
+def tkdiff():
+    inp = maininput.get(1.0,"end-1c")
+    equation = inp
+    equationsplit = re.split('([+-/])',equation)
+    differential(equationsplit)
+    lblin.config(text = "input: "+equation)
+    equationsplit = ''.join(equationsplit)
+    lblout.config(text = "output: "+equationsplit)
     
+    
+main= tk.Tk()
+main.title("calculator")
+
+maininput = tk.Text(main,height = 2 , width = 10)
+maininput.pack()
+printbutton = tk.Button(main,text = "print",command=output)
+printbutton.pack()
+differentialbttn = tk.Button(main,text = "differential",command=tkdiff)
+differentialbttn.pack()
+lblin = tk.Label(main,text="")
+lblin.pack()
+lblout = tk.Label(main,text="")
+lblout.pack()
+
+
+
+
+
+
+main.mainloop()   
     
 
 choice = input("differential,integral")           
