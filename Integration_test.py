@@ -145,7 +145,7 @@ def differential(equationsplit): # done
             dydx = ''.join(dydx)
             equationsplit[sctinit] = dydx
             print(vartwo)   
-        elif "cos" in var:
+        elif re.search(r'(cos)',var):
             #splitting the variable at the trig function
             varsplit = re.split('(cos)',var)
            # print(varsplit)
@@ -666,7 +666,7 @@ def differential(equationsplit): # done
             dydx = ''.join(dydx)
             equationsplit[sctinit] = dydx
             print(vartwo)  
-        elif "cosec" in var:
+        elif re.search(r'(cosec)',var):
             varsplit = re.split('(cosec)',var)
             print(varsplit)
             varsplitlen = len(varsplit)
