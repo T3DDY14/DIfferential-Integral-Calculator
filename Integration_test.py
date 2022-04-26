@@ -660,6 +660,8 @@ def differential(equationsplit): # done
                         break
             vartwo = ''.join(vartwo)   
             varthree = ''.join(varthree)
+            varone = varone.split(",")
+            print(varone,"varone")
             dydx = vartwo,varone[0],"(",varthree,")",varone[1],"(",varthree,")"
             dydx = ''.join(dydx)
             equationsplit[sctinit] = dydx
@@ -789,6 +791,8 @@ def differential(equationsplit): # done
                         break
             vartwo = ''.join(vartwo) 
             varthree = ''.join(varthree)
+            varone = varone.split(",")
+            print(varone,"varone")
             dydx = "-",vartwo,varone[0],"(",varthree,")",varone[1],"(",varthree,")"
             dydx = ''.join(dydx)
             equationsplit[sctinit] = dydx
