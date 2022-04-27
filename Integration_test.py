@@ -50,37 +50,24 @@ def differential(equationsplit): # done
             ##print(varsplit)
             vartwo = ''.join(varsplit)
             ##print(vartwo)
-            varthree = []
+            varthree = []            
+            vartwo = re.sub('[y]','+',vartwo)
+            vartwo = re.sub('[u]','-',vartwo)
+            vartwo = re.sub('[d]','/',vartwo)
             varthree = vartwo
+            print(vartwo)
             vartwo = re.split('([y|u|d])',vartwo) #splits the vartwo by the y whilst keeping the y key
-            varthree = re.split('([y|u|d])',varthree)
+            print(vartwo,"vartwo")
+            #varthree = re.split('([y|u|d])',varthree)
             vartwolen = len(vartwo)
-            varthreelen = len(varthree)
+            #varthreelen = len(varthree)
             vartwoinit = 0
-            varthreeinit = 0 
-            while varthreeinit < varthreelen:
-                workingvar = vartwo[varthreeinit]
-                if varthreeinit == varthreelen:
-                    break
-                if workingvar == "y":
-                    workingvar = "+"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "u":
-                    workingvar = "-"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "d":
-                    workingvar = "/"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar != "y":
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
+            #varthreeinit = 0 
             while vartwoinit < vartwolen:
                 if vartwoinit == vartwolen:
                     break
                 workingvar = vartwo[vartwoinit]
+                print("workingvar",workingvar)
                 if workingvar == "y":
                     workingvar = "+"
                     vartwo[vartwoinit] = workingvar
