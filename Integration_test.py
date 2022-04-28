@@ -171,32 +171,17 @@ def differential(equationsplit): # done
             vartwo = ''.join(varsplit)
             ##print(vartwo)
             varthree = []
+            vartwo = re.sub('[y]','+',vartwo)
+            vartwo = re.sub('[u]','-',vartwo)
+            vartwo = re.sub('[d]','/',vartwo)
             varthree = vartwo
             vartwo = re.split('([y|u|d])',vartwo) #splits the vartwo by the y whilst keeping the y key
-            varthree = re.split('([y|u|d])',varthree)
+            ##varthree = re.split('([y|u|d])',varthree)
             vartwolen = len(vartwo)
             varthreelen = len(varthree)
             vartwoinit = 0
             varthreeinit = 0 
-            while varthreeinit < varthreelen:
-                workingvar = vartwo[varthreeinit]
-                if varthreeinit == varthreelen:
-                    break
-                if workingvar == "y":
-                    workingvar = "+"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "u":
-                    workingvar = "-"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "d":
-                    workingvar = "/"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar != "y":
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
+           
             while vartwoinit < vartwolen:
                 if vartwoinit == vartwolen:
                     break
@@ -305,32 +290,17 @@ def differential(equationsplit): # done
             vartwo = ''.join(varsplit)
             print(vartwo)
             varthree = []
+            vartwo = re.sub('[y]','+',vartwo)
+            vartwo = re.sub('[u]','-',vartwo)
+            vartwo = re.sub('[d]','/',vartwo)
             varthree = vartwo
             vartwo = re.split('([y|u|d])',vartwo) #splits the vartwo by the y whilst keeping the y key
-            varthree = re.split('([y|u|d])',varthree)
+            ##varthree = re.split('([y|u|d])',varthree)
             vartwolen = len(vartwo)
             varthreelen = len(varthree)
             vartwoinit = 0
             varthreeinit = 0 
-            while varthreeinit < varthreelen:
-                workingvar = vartwo[varthreeinit]
-                if varthreeinit == varthreelen:
-                    break
-                if workingvar == "y":
-                    workingvar = "+"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "u":
-                    workingvar = "-"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "d":
-                    workingvar = "/"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar != "y":
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
+            
             while vartwoinit < vartwolen:
                 if vartwoinit == vartwolen:
                     break
@@ -438,32 +408,17 @@ def differential(equationsplit): # done
             vartwo = ''.join(varsplit)
             #print(vartwo)
             varthree = []
+            vartwo = re.sub('[y]','+',vartwo)
+            vartwo = re.sub('[u]','-',vartwo)
+            vartwo = re.sub('[d]','/',vartwo)
             varthree = vartwo
             vartwo = re.split('([y|u|d])',vartwo) #splits the vartwo by the y whilst keeping the y key
-            varthree = re.split('([y|u|d])',varthree)
+            ##varthree = re.split('([y|u|d])',varthree)
             vartwolen = len(vartwo)
             varthreelen = len(varthree)
             vartwoinit = 0
             varthreeinit = 0 
-            while varthreeinit < varthreelen:
-                workingvar = vartwo[varthreeinit]
-                if varthreeinit == varthreelen:
-                    break
-                if workingvar == "y":
-                    workingvar = "+"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "u":
-                    workingvar = "-"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "d":
-                    workingvar = "/"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar != "y":
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
+            
             while vartwoinit < vartwolen:
                 workingvar = vartwo[vartwoinit]
                 #print(workingvar,"workingvar")
@@ -566,32 +521,17 @@ def differential(equationsplit): # done
             vartwo = ''.join(varsplit)
             ##print(vartwo)
             varthree = []
+            vartwo = re.sub('[y]','+',vartwo)
+            vartwo = re.sub('[u]','-',vartwo)
+            vartwo = re.sub('[d]','/',vartwo)
             varthree = vartwo
             vartwo = re.split('([y|u|d])',vartwo) #splits the vartwo by the y whilst keeping the y key
-            varthree = re.split('([y|u|d])',varthree)
+            ##varthree = re.split('([y|u|d])',varthree)
             vartwolen = len(vartwo)
             varthreelen = len(varthree)
             vartwoinit = 0
             varthreeinit = 0 
-            while varthreeinit < varthreelen:
-                workingvar = vartwo[varthreeinit]
-                if varthreeinit == varthreelen:
-                    break
-                if workingvar == "y":
-                    workingvar = "+"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "u":
-                    workingvar = "-"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "d":
-                    workingvar = "/"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar != "y":
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
+            
                 
             while vartwoinit < vartwolen:
                 workingvar = vartwo[vartwoinit]
@@ -695,32 +635,17 @@ def differential(equationsplit): # done
             vartwo = ''.join(varsplit)
             ##print(vartwo)
             varthree = []
+            vartwo = re.sub('[y]','+',vartwo)
+            vartwo = re.sub('[u]','-',vartwo)
+            vartwo = re.sub('[d]','/',vartwo)
             varthree = vartwo
             vartwo = re.split('([y|u|d])',vartwo) #splits the vartwo by the y whilst keeping the y key
-            varthree = re.split('([y|u|d])',varthree)
+            ##varthree = re.split('([y|u|d])',varthree)
             vartwolen = len(vartwo)
             varthreelen = len(varthree)
             vartwoinit = 0
             varthreeinit = 0 
-            while varthreeinit < varthreelen:
-                workingvar = vartwo[varthreeinit]
-                if varthreeinit == varthreelen:
-                    break
-                if workingvar == "y":
-                    workingvar = "+"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "u":
-                    workingvar = "-"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "d":
-                    workingvar = "/"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar != "y":
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
+            
             while vartwoinit < vartwolen:
                 if vartwoinit == vartwolen:
                     break
@@ -948,32 +873,17 @@ def differential(equationsplit): # done
             vartwo = ''.join(varsplit)
             ##print(vartwo)
             varthree = []
+            vartwo = re.sub('[y]','+',vartwo)
+            vartwo = re.sub('[u]','-',vartwo)
+            vartwo = re.sub('[d]','/',vartwo)
             varthree = vartwo
             vartwo = re.split('([y|u]|d)',vartwo) #splits the vartwo by the y whilst keeping the y key
-            varthree = re.split('([y|u|d])',varthree)
+            ##varthree = re.split('([y|u|d])',varthree)
             vartwolen = len(vartwo)
             varthreelen = len(varthree)
             vartwoinit = 0
             varthreeinit = 0 
-            while varthreeinit < varthreelen:
-                workingvar = vartwo[varthreeinit]
-                if varthreeinit == varthreelen:
-                    break
-                if workingvar == "y":
-                    workingvar = "+"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "u":
-                    workingvar = "-"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
-                elif workingvar == "d":
-                    workingvar = "/"
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1                    
-                elif workingvar != "y":
-                    varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
+            
             while vartwoinit < vartwolen:
                 if vartwoinit == vartwolen:
                     break
