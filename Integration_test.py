@@ -14,7 +14,7 @@ def differential(equationsplit): # done
         var = equationsplit[sctinit] #puting variable from array into a string variable
         print(var,"var")        
         #checking if the variable is a trig function or a normal
-        if "sin" in var:       #done 
+        if "sin" in var: #done 
             #splitting the variable at the trig function
             varsplit = re.split('(sin)',var)
             ##print(varsplit)
@@ -30,7 +30,7 @@ def differential(equationsplit): # done
             else:
                 varsplitbase = varsplit[0]            
                 varsplitbase = varsplitbase
-                #replacing the empty variable with the new trig function
+                #replacing the empty variable with the new trig function
                 varsplit[1] = "cos"
                 #saving the first variable for use later
                 varone = varsplit[1]     
@@ -200,7 +200,7 @@ def differential(equationsplit): # done
             dydx = ''.join(dydx)
             equationsplit[sctinit] = dydx
             print(vartwo)   
-        elif "cosec" in var:
+        elif "cosec" in var: # done
             varsplit = re.split('(cosec)',var)
             ##print(varsplit)
             varsplitlen = len(varsplit)
@@ -214,7 +214,7 @@ def differential(equationsplit): # done
                 varone = varsplit[1]
             else:
                 varsplitbase = varsplit[0]            
-                varsplitbase = Fraction(varsplitbase)
+                varsplitbase = varsplitbase
                 #replacing the empty variable with the new trig function
                 varsplit[1] = "cosec,cot"
                 #saving the first variable for use later
@@ -226,9 +226,7 @@ def differential(equationsplit): # done
             #splitting the array for the x component
             varsplit = varwhole.split("(")
             ##print(varsplit)
-            #saving the first variable for use later
-            ##varone = varsplit[0]
-            ##print(varone)
+
             #making the split variable one variable
             varsplit = varsplit[1]
             ##print(varsplit)
@@ -242,13 +240,81 @@ def differential(equationsplit): # done
             vartwo = re.sub('[u]','-',vartwo)
             vartwo = re.sub('[d]','/',vartwo)
             varthree = vartwo
+            varsplitbasex = re.search("x",varsplitbase)
+            print(varsplitbasex,"xd")
+            varsplitbase = re.sub('[y]','+',varsplitbase)
+            varsplitbase = re.sub('[u]','-',varsplitbase)
+            varsplitbase = re.sub('[d]','/',varsplitbase) 
+            varsplitbase = re.split('([y|u|d])',varsplitbase)
+            varsplitbaselen = len(varsplitbase)
+            varsplitbaseinit = 0            
+            print(vartwo)
             vartwo = re.split('([y|u|d])',vartwo) #splits the vartwo by the y whilst keeping the y key
-            ##varthree = re.split('([y|u|d])',varthree)
+            print(vartwo,"vartwo")
+            #varthree = re.split('([y|u|d])',varthree)
             vartwolen = len(vartwo)
-            varthreelen = len(varthree)
+            #varthreelen = len(varthree)
             vartwoinit = 0
-            varthreeinit = 0 
-           
+            #varthreeinit = 0 
+            if varsplitbasex == None:
+                varsplitbase = varsplitbase
+            else:
+                while varsplitbaseinit < varsplitbaselen:
+                    if varsplitbaseinit == varsplitbaselen:
+                        break
+                    workingvar = varsplitbase[varsplitbaseinit]
+                    if workingvar == "y":
+                        workingvar = "+"
+                        varsplitbase[varsplitbaseinit] = workingvar
+                        varsplitbaseinit += 1
+                    elif workingvar == "u":
+                        workingvar = "-"
+                        varsplitbase[varsplitbaseinit] = workingvar
+                        varsplitbaseinit += 1
+                    elif workingvar == "d":
+                        workingvar = "/"
+                        varthree[varthreeinit] = workingvar
+                        varthreeinit += 1                    
+                    elif workingvar != "y":
+                        ##print(workingvar)
+                        workingvar = workingvar.split("x")
+                        base = workingvar[0]
+                        power = workingvar[1]
+                        power = ''.join(power)
+                        power = power.split("^")
+                        powerlen = len(power)
+                        if powerlen == 2:
+                            power = power[1]
+                        elif powerlen == 1:
+                            power = 1
+                        base = Fraction(base)
+                        power = Fraction(power)
+                        base = base*power
+                        ##base = base*varsplitbase
+                        power = power - 1                  
+                        if power == 1:
+                            base = str(base)
+                            power = str(power)
+                            xvar = base,"x"
+                            xvar = ''.join(xvar)
+                            varsplitbase[varsplitbaseinit] = xvar
+                        elif power == 0:
+                            base = str(base)
+                            xvar = base
+                            varsplitbase[varsplitbaseinit] = xvar
+                        elif power > 1:
+                            base = str(base)
+                            power = str(power)
+                            xvar = base,"x^",power
+                            xvar = ''.join(xvar)
+                            varsplitbase[varsplitbaseinit] = xvar
+                        elif power < 0:
+                            base = str(base)
+                            power = str(power)
+                            xvar = base,"x^",power
+                            xvar = ''.join(xvar)
+                            varsplitbase[varsplitbaseinit] = xvar                   
+                        varsplitbaseinit += 1           
             while vartwoinit < vartwolen:
                 if vartwoinit == vartwolen:
                     break
@@ -284,7 +350,7 @@ def differential(equationsplit): # done
                     base = Fraction(base)
                     power = Fraction(power)
                     base = base*power
-                    base = base*varsplitbase
+                    ##base = base*varsplitbase
                     power = power - 1                  
                     if power == 1:
                         base = str(base)
@@ -308,15 +374,14 @@ def differential(equationsplit): # done
                         xvar = base,"x^",power
                         xvar = ''.join(xvar)
                         vartwo[vartwoinit] = xvar                   
-                    vartwoinit += 1
-
-                        
-
-            vartwo = ''.join(vartwo) 
+                    vartwoinit += 1                     
+            vartwo = ''.join(vartwo)
             varthree = ''.join(varthree)
+            varsplitbase = ''.join(varsplitbase)
+            varsplitbase = str(varsplitbase)
             varone = varone.split(",")
             print(varone,"varone")
-            dydx = "-",vartwo,varone[0],"(",varthree,")",varone[1],"(",varthree,")"
+            dydx = "-",varsplitbase,"*",vartwo,varone[0],"(",varthree,")",varone[1],"(",varthree,")"
             dydx = ''.join(dydx)
             equationsplit[sctinit] = dydx                     
         elif "cos" in var: #done
@@ -689,7 +754,8 @@ def differential(equationsplit): # done
             dydx = varsplitbase,"*",vartwo,varone,"(",varthree,")"
             dydx = ''.join(dydx)
             equationsplit[sctinit] = dydx
-        elif "cot" in var:
+        elif "cot" in var: #done
+            #splitting the variable at the trig function
             varsplit = re.split('(cot)',var)
             ##print(varsplit)
             varsplitlen = len(varsplit)
@@ -703,11 +769,11 @@ def differential(equationsplit): # done
                 varone = varsplit[1]
             else:
                 varsplitbase = varsplit[0]            
-                varsplitbase = Fraction(varsplitbase)
+                varsplitbase = varsplitbase
                 #replacing the empty variable with the new trig function
                 varsplit[1] = "cosec^2"
                 #saving the first variable for use later
-                varone = varsplit[1]
+                varone = varsplit[1]     
             ##print(varsplit)
             #joining the array back together for another split
             varwhole = "".join(varsplit)
@@ -715,9 +781,7 @@ def differential(equationsplit): # done
             #splitting the array for the x component
             varsplit = varwhole.split("(")
             ##print(varsplit)
-            #saving the first variable for use later
-            ##varone = varsplit[0]
-            ##print(varone)
+            
             #making the split variable one variable
             varsplit = varsplit[1]
             ##print(varsplit)
@@ -726,22 +790,91 @@ def differential(equationsplit): # done
             ##print(varsplit)
             vartwo = ''.join(varsplit)
             ##print(vartwo)
-            varthree = []
+            varthree = []            
             vartwo = re.sub('[y]','+',vartwo)
             vartwo = re.sub('[u]','-',vartwo)
             vartwo = re.sub('[d]','/',vartwo)
             varthree = vartwo
+            varsplitbasex = re.search("x",varsplitbase)
+            print(varsplitbasex,"xd")
+            varsplitbase = re.sub('[y]','+',varsplitbase)
+            varsplitbase = re.sub('[u]','-',varsplitbase)
+            varsplitbase = re.sub('[d]','/',varsplitbase) 
+            varsplitbase = re.split('([y|u|d])',varsplitbase)
+            varsplitbaselen = len(varsplitbase)
+            varsplitbaseinit = 0            
+            print(vartwo)
             vartwo = re.split('([y|u|d])',vartwo) #splits the vartwo by the y whilst keeping the y key
-            ##varthree = re.split('([y|u|d])',varthree)
+            print(vartwo,"vartwo")
+            #varthree = re.split('([y|u|d])',varthree)
             vartwolen = len(vartwo)
-            varthreelen = len(varthree)
+            #varthreelen = len(varthree)
             vartwoinit = 0
-            varthreeinit = 0 
-            
-                
+            #varthreeinit = 0
+            if varsplitbasex == None:
+                varsplitbase = varsplitbase
+            else:
+                while varsplitbaseinit < varsplitbaselen:
+                    if varsplitbaseinit == varsplitbaselen:
+                        break
+                    workingvar = varsplitbase[varsplitbaseinit]
+                    if workingvar == "y":
+                        workingvar = "+"
+                        varsplitbase[varsplitbaseinit] = workingvar
+                        varsplitbaseinit += 1
+                    elif workingvar == "u":
+                        workingvar = "-"
+                        varsplitbase[varsplitbaseinit] = workingvar
+                        varsplitbaseinit += 1
+                    elif workingvar == "d":
+                        workingvar = "/"
+                        varthree[varthreeinit] = workingvar
+                        varthreeinit += 1                    
+                    elif workingvar != "y":
+                        ##print(workingvar)
+                        workingvar = workingvar.split("x")
+                        base = workingvar[0]
+                        power = workingvar[1]
+                        power = ''.join(power)
+                        power = power.split("^")
+                        powerlen = len(power)
+                        if powerlen == 2:
+                            power = power[1]
+                        elif powerlen == 1:
+                            power = 1
+                        base = Fraction(base)
+                        power = Fraction(power)
+                        base = base*power
+                        ##base = base*varsplitbase
+                        power = power - 1                  
+                        if power == 1:
+                            base = str(base)
+                            power = str(power)
+                            xvar = base,"x"
+                            xvar = ''.join(xvar)
+                            varsplitbase[varsplitbaseinit] = xvar
+                        elif power == 0:
+                            base = str(base)
+                            xvar = base
+                            varsplitbase[varsplitbaseinit] = xvar
+                        elif power > 1:
+                            base = str(base)
+                            power = str(power)
+                            xvar = base,"x^",power
+                            xvar = ''.join(xvar)
+                            varsplitbase[varsplitbaseinit] = xvar
+                        elif power < 0:
+                            base = str(base)
+                            power = str(power)
+                            xvar = base,"x^",power
+                            xvar = ''.join(xvar)
+                            varsplitbase[varsplitbaseinit] = xvar                   
+                        varsplitbaseinit += 1
             while vartwoinit < vartwolen:
+                if vartwoinit == vartwolen:
+                    break
                 workingvar = vartwo[vartwoinit]
-                ##print(workingvar,"workingvar")
+                print("workingvar",workingvar)
                 if workingvar == "y":
                     workingvar = "+"
                     vartwo[vartwoinit] = workingvar
@@ -753,26 +886,28 @@ def differential(equationsplit): # done
                 elif workingvar == "d":
                     workingvar = "/"
                     varthree[varthreeinit] = workingvar
-                    varthreeinit += 1
+                    varthreeinit += 1    
                 elif workingvar != "y":
-                    ##print(workingvar)
+                    print(workingvar)
                     workingvar = workingvar.split("x")
                     base = workingvar[0]
                     power = workingvar[1]
                     power = ''.join(power)
                     power = power.split("^")
                     powerlen = len(power)
-                    ##print(powerlen,"powerlen")
                     if powerlen == 2:
                         power = power[1]
                     elif powerlen == 1:
                         power = 1
-                    ##print(base,"base")
-                    ##print(power,"power")
+                    if base == "x":
+                        base = 1
+                    else:
+                        base = base
                     base = Fraction(base)
                     power = Fraction(power)
                     base = base*power
-                    power = power - 1
+                    ##base = base*varsplitbase
+                    power = power - 1                  
                     if power == 1:
                         base = str(base)
                         power = str(power)
@@ -795,15 +930,17 @@ def differential(equationsplit): # done
                         xvar = base,"x^",power
                         xvar = ''.join(xvar)
                         vartwo[vartwoinit] = xvar                   
-                    vartwoinit += 1
-                    if vartwoinit == vartwolen:
-                        break
-            vartwo = ''.join(vartwo) 
+                    vartwoinit += 1                                 
+            vartwo = ''.join(vartwo)
             varthree = ''.join(varthree)
-            dydx = "-",vartwo,varone,"(",varthree,")"
+            varsplitbase = ''.join(varsplitbase)
+            varsplitbase = str(varsplitbase)            
+            dydx = varsplitbase,"*",vartwo,varone,"(",varthree,")"
+            print("dydx",dydx)
             dydx = ''.join(dydx)
-            equationsplit[sctinit] = dydx          
-        elif "sec" in var:
+            equationsplit[sctinit] = dydx
+            print(vartwo)          
+        elif "sec" in var: #done
             varsplit = re.split('(sec)',var)
             ##print(varsplit)
             varsplitlen = len(varsplit)
@@ -817,7 +954,7 @@ def differential(equationsplit): # done
                 varone = varsplit[1]
             else:
                 varsplitbase = varsplit[0]            
-                varsplitbase = Fraction(varsplitbase)
+                varsplitbase = varsplitbase
                 #replacing the empty variable with the new trig function
                 varsplit[1] = "sec,tan"
                 #saving the first variable for use later
@@ -829,9 +966,7 @@ def differential(equationsplit): # done
             #splitting the array for the x component
             varsplit = varwhole.split("(")
             ##print(varsplit)
-            #saving the first variable for use later
-            ##varone = varsplit[0]
-            ##print(varone)
+
             #making the split variable one variable
             varsplit = varsplit[1]
             ##print(varsplit)
@@ -845,13 +980,81 @@ def differential(equationsplit): # done
             vartwo = re.sub('[u]','-',vartwo)
             vartwo = re.sub('[d]','/',vartwo)
             varthree = vartwo
+            varsplitbasex = re.search("x",varsplitbase)
+            print(varsplitbasex,"xd")
+            varsplitbase = re.sub('[y]','+',varsplitbase)
+            varsplitbase = re.sub('[u]','-',varsplitbase)
+            varsplitbase = re.sub('[d]','/',varsplitbase) 
+            varsplitbase = re.split('([y|u|d])',varsplitbase)
+            varsplitbaselen = len(varsplitbase)
+            varsplitbaseinit = 0            
+            print(vartwo)
             vartwo = re.split('([y|u|d])',vartwo) #splits the vartwo by the y whilst keeping the y key
-            ##varthree = re.split('([y|u|d])',varthree)
+            print(vartwo,"vartwo")
+            #varthree = re.split('([y|u|d])',varthree)
             vartwolen = len(vartwo)
-            varthreelen = len(varthree)
+            #varthreelen = len(varthree)
             vartwoinit = 0
-            varthreeinit = 0 
-            
+            #varthreeinit = 0 
+            if varsplitbasex == None:
+                varsplitbase = varsplitbase
+            else:
+                while varsplitbaseinit < varsplitbaselen:
+                    if varsplitbaseinit == varsplitbaselen:
+                        break
+                    workingvar = varsplitbase[varsplitbaseinit]
+                    if workingvar == "y":
+                        workingvar = "+"
+                        varsplitbase[varsplitbaseinit] = workingvar
+                        varsplitbaseinit += 1
+                    elif workingvar == "u":
+                        workingvar = "-"
+                        varsplitbase[varsplitbaseinit] = workingvar
+                        varsplitbaseinit += 1
+                    elif workingvar == "d":
+                        workingvar = "/"
+                        varthree[varthreeinit] = workingvar
+                        varthreeinit += 1                    
+                    elif workingvar != "y":
+                        ##print(workingvar)
+                        workingvar = workingvar.split("x")
+                        base = workingvar[0]
+                        power = workingvar[1]
+                        power = ''.join(power)
+                        power = power.split("^")
+                        powerlen = len(power)
+                        if powerlen == 2:
+                            power = power[1]
+                        elif powerlen == 1:
+                            power = 1
+                        base = Fraction(base)
+                        power = Fraction(power)
+                        base = base*power
+                        ##base = base*varsplitbase
+                        power = power - 1                  
+                        if power == 1:
+                            base = str(base)
+                            power = str(power)
+                            xvar = base,"x"
+                            xvar = ''.join(xvar)
+                            varsplitbase[varsplitbaseinit] = xvar
+                        elif power == 0:
+                            base = str(base)
+                            xvar = base
+                            varsplitbase[varsplitbaseinit] = xvar
+                        elif power > 1:
+                            base = str(base)
+                            power = str(power)
+                            xvar = base,"x^",power
+                            xvar = ''.join(xvar)
+                            varsplitbase[varsplitbaseinit] = xvar
+                        elif power < 0:
+                            base = str(base)
+                            power = str(power)
+                            xvar = base,"x^",power
+                            xvar = ''.join(xvar)
+                            varsplitbase[varsplitbaseinit] = xvar                   
+                        varsplitbaseinit += 1           
             while vartwoinit < vartwolen:
                 if vartwoinit == vartwolen:
                     break
@@ -887,7 +1090,7 @@ def differential(equationsplit): # done
                     base = Fraction(base)
                     power = Fraction(power)
                     base = base*power
-                    base = base*varsplitbase
+                    ##base = base*varsplitbase
                     power = power - 1                  
                     if power == 1:
                         base = str(base)
@@ -911,21 +1114,20 @@ def differential(equationsplit): # done
                         xvar = base,"x^",power
                         xvar = ''.join(xvar)
                         vartwo[vartwoinit] = xvar                   
-                    vartwoinit += 1
-
-                        
-
-            vartwo = ''.join(vartwo) 
+                    vartwoinit += 1                     
+            vartwo = ''.join(vartwo)
             varthree = ''.join(varthree)
+            varsplitbase = ''.join(varsplitbase)
+            varsplitbase = str(varsplitbase)
             varone = varone.split(",")
             print(varone,"varone")
-            dydx = "-",vartwo,varone[0],"(",varthree,")",varone[1],"(",varthree,")"
+            dydx = "-",varsplitbase,"*",vartwo,varone[0],"(",varthree,")",varone[1],"(",varthree,")"
             dydx = ''.join(dydx)
             equationsplit[sctinit] = dydx             
-        elif "ln" in var:        
+        elif "ln" in var: #needs rewriting        
             #splitting the variable at the trig function
             varsplit = re.split('(ln)',var)
-            print(varsplit)
+            print(varsplit,"ad")
             varsplitlen = len(varsplit)
             varsplitbase = varsplit[0]
             ##print(varsplitlen)
@@ -935,29 +1137,32 @@ def differential(equationsplit): # done
                 varsplit[1] = "1/"
                 # #saving the first variable for use later 
                 varone = varsplit[1]
+                varpower = varsplit[2]
             else:
                 varsplitbase = varsplit[0]            
                 varsplitbase = varsplitbase
                 #replacing the empty variable with the new trig function
                 varsplit[1] = "1/"
                 #saving the first variable for use later
-                varone = varsplit[1]     
-            ##print(varsplit)
+                varone = varsplit[1]
+                varpower = varsplit[2]                
+            print(varsplit)
             #joining the array back together for another split
-            varwhole = "".join(varsplit)
+            ##varwhole = "".join(varsplit)
             ##print(varwhole)
             #splitting the array for the x component
-            varsplit = varwhole.split("(")
-            ##print(varsplit)
+            
+            varsplit = varpower.split("(")
+            print(varsplit)
             
             #making the split variable one variable
             varsplit = varsplit[1]
-            ##print(varsplit)
+            print(varsplit)
             #splitting the closed bracked to work on variable
             varsplit = varsplit.split(")")
-            ##print(varsplit)
+            print(varsplit)
             vartwo = ''.join(varsplit)
-            ##print(vartwo)
+            print(vartwo)
             varthree = []
             
             vartwo = re.sub('[y]','+',vartwo)
@@ -1055,6 +1260,7 @@ def differential(equationsplit): # done
                 if varsplitbaseinit == varsplitbaselen:
                     break
                 workingvar = varsplitbase[varsplitbaseinit]
+                print(workingvar,"working")
                 if workingvar == "y":
                     workingvar = "+"
                     varsplitbase[varsplitbaseinit] = workingvar
@@ -1070,15 +1276,20 @@ def differential(equationsplit): # done
                 elif workingvar != "y":
                     ##print(workingvar)
                     workingvar = workingvar.split("x")
-                    base = workingvar[0]
-                    power = workingvar[1]
-                    power = ''.join(power)
-                    power = power.split("^")
-                    powerlen = len(power)
-                    if powerlen == 2:
-                        power = power[1]
-                    elif powerlen == 1:
+                    workingvarlen = len(workingvar)
+                    print(workingvarlen,"len")
+                    if workingvarlen == 1:
                         power = 1
+                    else:
+                        power = workingvar[1]
+                        power = ''.join(power)
+                        power = power.split("^")
+                        powerlen = len(power)
+                        if powerlen == 2:
+                            power = power[1]
+                        elif powerlen == 1:
+                            power = 1
+                    base = workingvar[0]
                     base = Fraction(base)
                     power = Fraction(power)
                     base = base*power
@@ -1117,7 +1328,7 @@ def differential(equationsplit): # done
             ##print("dydx",dydx)
             dydx = ''.join(dydx)
             equationsplit[sctinit] = dydx    
-        elif "e^" in var:        
+        elif "e^" in var: #done        
             #splitting the variable at the trig function
             varsplit = re.split('(e)',var)
             ##print(varsplit,"varsplit")
